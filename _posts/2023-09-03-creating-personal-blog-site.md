@@ -102,7 +102,7 @@ mysite/
 ### 3.3 主题
 **主题**(theme)提供了网站页面的布局和样式，详见官方文档[Themes](https://jekyllrb.com/docs/themes/)。
 
-可以在 <http://jekyllthemes.org/> 选择自己喜欢的主题并在线预览。我选择的主题是[Chirpy](http://jekyllthemes.org/themes/jekyll-theme-chirpy/)，该主题提供了**分类**(category)、**标签**(tag)、目录、语法高亮、数学公式、搜索文章、评论系统等特性，能够满足博客网站的绝大部分需求。
+可以在 <https://jekyllthemes.org/> 选择自己喜欢的主题并在线预览。我选择的主题是[Chirpy](https://jekyllthemes.org/themes/jekyll-theme-chirpy/)，该主题提供了**分类**(category)、**标签**(tag)、目录、语法高亮、数学公式、搜索文章、评论系统等特性，能够满足博客网站的绝大部分需求。
 * 在线Demo & 使用教程：<https://chirpy.cotes.page/>
 * 项目主页：<https://github.com/cotes2020/jekyll-theme-chirpy/>
 
