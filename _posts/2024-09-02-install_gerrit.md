@@ -7,13 +7,12 @@ comments: true
 author: weijun23
 ---
 
-<pre>
+```shell
 [gerrit@ ~]# cat /etc/redhat-release
-       CentOS Linux release 7.6.1810 (Core)  
-
-=============================================================================================================================================================
-一、安装JDK
-
+       CentOS Linux release 7.6.1810 (Core)
+```
+## 一、安装JDK
+```shell
 [gerrit@ ~]# sudo yum search jdk                        #查看CenOS的yum源支持的openjdk版本
 [gerrit@ ~]# sudo yum install java-1.8.0-openjdk-devel
 
@@ -25,10 +24,9 @@ author: weijun23
        java-1.8.0-openjdk-devel-1.8.0.412.b08-1.el7_9.x86_64
        java-1.8.0-openjdk-headless-1.8.0.412.b08-1.el7_9.x86_64
        java-1.8.0-openjdk-1.8.0.412.b08-1.el7_9.x86_64
-
-=============================================================================================================================================================
-二、安装Git
-
+```
+## 二、安装Git
+```shell
 [gerrit@ ~]# sudo yum install gitweb           #安装gitweb服务
 [gerrit@ ~]# sudo yum install epel-release     #安装第三方软件源 REPL，因为里面存有git-review的安装包
 [gerrit@ ~]# sudo yum install git-review       #安装git-review，我们会用到git review命令，使用它可以轻松把本地代码push到greeit服务器上去
@@ -36,20 +34,18 @@ author: weijun23
 [gerrit@ ~]# sudo yum remove git               #如果你已经安装了git，建议卸载掉，或者用rpm命令进行卸载
 [gerrit@ ~]# sudo yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm #安装新版本 Git 最快的方法是通过 End Point 库。
 [gerrit@ ~]# sudo yum install git
- 
-=============================================================================================================================================================
-三.安装Apache服务并启动
-
+```
+## 三.安装Apache服务并启动
+```shell
 [gerrit@ ~]# sudo yum install httpd
 [gerrit@ ~]# sudo systemctl enable httpd
 [gerrit@ ~]# sudo systemctl restart httpd
 [gerrit@ ~]# rpm -qa | grep httpd
        httpd-tools-2.4.6-99.el7.centos.1.x86_64
        httpd-2.4.6-99.el7.centos.1.x86_64
-
-=============================================================================================================================================================
-四、安装mysql(切记安装5.6版本，5.7会连接出错)
-
+```
+## 四、安装mysql(切记安装5.6版本，5.7会连接出错)
+```shell
 [gerrit@ ~]# rpm -qa | grep mariadb; rpm -qa | grep mysql                                    #找到的，删除
 [gerrit@ ~]# sudo yum install http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm #安装 mysql yum 源
 [gerrit@ ~]# sudo yum install mysql-server                                                   #安装 mysql
@@ -73,13 +69,11 @@ author: weijun23
 
 [gerrit@ ~]# mysql --version
        mysql  Ver 14.14 Distrib 5.6.51, for Linux (x86_64) using  EditLine wrapper
-
-=============================================================================================================================================================
-四、安装gerrit (下面“<=========”的要注意修改,别的用默认,直接回车)
-
+```
+## 五、安装gerrit (下面“<=========”的要注意修改,别的用默认,直接回车)
+```shell
 [gerrit@ ~]# wget https://gerrit-releases.storage.googleapis.com/gerrit-2.14.22.war
 [gerrit@ ~]# java -jar gerrit-2.14.22.war init -d review
-
    Using secure store: com.google.gerrit.server.securestore.DefaultSecureStore
    [2024-08-31 22:31:24,219] [main] INFO  com.google.gerrit.server.config.GerritServerConfigProvider : No /home/gerrit/review/etc/gerrit.config; assuming defaults
    
@@ -197,10 +191,9 @@ author: weijun23
    Opening http://192.168.190.229/#/admin/projects/ ...FAILED
    Open Gerrit with a JavaScript capable browser:
      http://192.168.190.229/#/admin/projects/
-
-=============================================================================================================================================================
-五、修改gerrit配置，canonicalWebUrl是退出gerrit登录后跳转的网址
-
+```
+## 六、修改gerrit配置，canonicalWebUrl是退出gerrit登录后跳转的网址
+```shell
 [gerrit@ ~]# sudo ./review/bin/gerrit.sh restart   # 重启gerrit
 [gerrit@ ~]# cat review/etc/gerrit.config
    [gerrit]
@@ -232,11 +225,9 @@ author: weijun23
            listenUrl = proxy-http://*:8081/
    [cache]
            directory = cache
-   
-
-=============================================================================================================================================================
-五、创建passwd文件，添加gerrit登录用户, 修改Apache的config文件httpd.conf
-
+```
+## 七、创建passwd文件，添加gerrit登录用户, 修改Apache的config文件httpd.conf
+```shell
 [gerrit@ ~]# sudo systemctl restart httpd                        #重启appache
 [gerrit@ ~]# sudo htpasswd -cb /etc/httpd/passwords admin admin  #注意，"-c"参数为创建，仅限第一次添加用户时使用，用户名和密码均为admin
 [gerrit@ ~]# sudo htpasswd -b /etc/httpd/passwords  wuwj wuwj    #第二次创建时不要加"-c"参数。创建一个wuwj用户，密码为"wuwj"
@@ -262,10 +253,9 @@ author: weijun23
        AllowEncodedSlashes On
        ProxyPass / http://127.0.0.1:8081/ nocanon                #Gerrit服务的端口号。nocanon参数可以创建git多层次目录
    </VirtualHost>
-
-=============================================================================================================================================================
-六、 在网页http://192.168.190.229 将SSH密钥添加到您的Gerrit帐户,  通过Gerrit的Web UI创建相应的存储库Repositories
-
+```
+## 八、 在网页http://192.168.190.229 将SSH密钥添加到您的Gerrit帐户,  通过Gerrit的Web UI创建相应的存储库Repositories
+```shell
            # 在客户端利用git将代码push到Gerrit服务器上, 获取空项目
 [gerrit@ ~]# git clone ssh://admin@192.168.190.229:29418/abc
 
@@ -277,12 +267,10 @@ author: weijun23
 [gerrit@ ~]# gitdir=$(git rev-parse --git-dir); scp -p -P 29418 admin@192.168.190.229:hooks/commit-msg ${gitdir}/hooks/
 [gerrit@ ~]# git commit --amend
 [gerrit@ ~]# git push origin HEAD:refs/for/master
-
-=============================================================================================================================================================
-七 、搭建repo的manifests仓库
-
-1、修改Apache的config文件httpd.conf,尾部添加8000端口
-
+```
+## 九 、搭建repo的manifests仓库
+### 1、修改Apache的config文件httpd.conf,尾部添加8000端口
+```shell
 [gerrit@ ~]# sudo vim /etc/httpd/conf/httpd.conf
     Listen 8000
     <VirtualHost *:8000>
@@ -304,17 +292,19 @@ author: weijun23
         ErrorLog /var/log/httpd/git-error.log
         CustomLog /var/log/httpd/git-access.log common
     </VirtualHost>
-
-2、 让apache可以访问gerrit创建的目录(很关键)
+```
+### 2、 让apache可以访问gerrit创建的目录(很关键)
+```shell
 [gerrit@ ~]# sudo usermod -aG gerrit apache
-
-3、 通过Gerrit的Web UI创建相应的存储库Repositories创建manifests仓库
-[gerrit@ ~]# git clone ssh://wuwj@192.168.190.229:29418/manifests #不要提交到HEAD:refs/for/master，会进入审核系统
-
+```
+### 3、 通过Gerrit的Web UI创建相应的存储库Repositories创建manifests仓库
+```shell
+[gerrit@ ~]# git clone ssh://wuwj@192.168.190.229:29418/mk/manifests #不要提交到HEAD:refs/for/master，会进入审核系统
+[gerrit@ ~]# repo init -u http://192.168.190.229:8000/git/mk/manifests.git -b api -m gx6605s_ecos_api.xml
+```
 这样就可以repo使用了
-[gerrit@ ~]# repo init -u http://192.168.190.229:8000/git/manifests.git -b api -m gx6605s_ecos_api/gx6605s_ecos_sdk/gx6605s_linux_api.xml
-
 
 其他：
+
  ~/review/bin/gerrit.sh stop;java -jar gerrit-2.14.22.war reindex -d review;sudo ~/review/bin/gerrit.sh restart
-</pre>
+
