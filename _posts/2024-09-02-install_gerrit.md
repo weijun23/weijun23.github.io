@@ -154,7 +154,7 @@ author: weijun23
    Behind reverse proxy           [y/N]? y                                    # <=========  使用发向代理
    Proxy uses SSL (https://)      [y/N]?
    Subdirectory on proxy server   [/]:
-   Listen on address              [*]:
+   Listen on address              [*]: localhost                              # <=========  
    Listen on port                 [8081]:
    Canonical URL                  [http://localhost/]: http://192.168.190.229 # <========= 规范url，退出gerrit后跳转的url
    
@@ -222,7 +222,7 @@ author: weijun23
    [sshd]
            listenAddress = *:29418
    [httpd]
-           listenUrl = proxy-http://*:8081/
+           listenUrl = proxy-http://localhost:8081/
    [cache]
            directory = cache
 ```
