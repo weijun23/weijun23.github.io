@@ -46,12 +46,12 @@ solutions = [
 使用gclient sync --nohooks命令下载chromium的第三方源代码，比如v8源代码，他是根据DEPS文件下载，这里必须要用到git代理
 
 ```bash
-gclient sync --nohooks #拉取代码之后不执行hooks
+gclient sync -v --nohooks #拉取代码之后不执行hooks,-v显示详细每一步
 ```
 利用gclient runhooks命令自动下载编译环境的文件，如gn，他会下载到buildtools目录下,描述在DEPS里的hooks节点
 
 ```bash
-gclient runhooks #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
+gclient -v runhooks #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
 ``` 
 
 ## 4、在ubuntu20.04解压合并第三方源代码
@@ -62,7 +62,7 @@ tar xf chromium53.0.2785.134_patch.tar.xz -C chromium53.0.2785.134/
 
 ## 5、编译
 
-新建编译参数文件args.gn
+新建编译参数文件args.gn，如果需要更多详细的配置参数，查看官网http://www.chromium.org/developers/gn-build-configuration
 ```python
 target_os = "linux"
 target_cpu = "x64"
@@ -70,8 +70,8 @@ is_component_build = false
 is_debug = true
 symbol_level=2
 ```
-symbol_level = 2：生成完整的调试符号，适合调试。0: 不生成调试符号。1: 生成基本的调试符号，适合发布版本。
-is_component_build = false：使用静态链接构建，所有依赖项都包含在最终的可执行文件中。
+symbol_level = 2：生成完整的调试符号，适合调试。0: 不生成调试符号。1: 生成基本的调试符号，适合发布版本。  
+is_component_build = false：使用静态链接构建，所有依赖项都包含在最终的可执行文件中。  
 
 一切就绪，开始编译
 ```bash
@@ -81,6 +81,7 @@ mv ../args.gn out/args.gn
 gn gen out/
 ninja -C out/
 ```
+附加命令：gn args --list out/，可以看配置
 
 ## 6、运行
 
