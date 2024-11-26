@@ -46,12 +46,12 @@ solutions = [
 使用gclient sync --nohooks命令下载chromium的第三方源代码，比如v8源代码，他是根据DEPS文件下载，这里必须要用到git代理
 
 ```bash
-gclient sync --nohooks -v --jobs=1 #拉取代码之后不执行hooks,-v显示详细每一步
+gclient sync --nohooks -v -j1 #拉取代码之后不执行hooks,-v显示详细每一步
 ```
 利用gclient runhooks命令自动下载编译环境的文件，如gn，他会下载到buildtools目录下,描述在DEPS里的hooks节点
 
 ```bash
-gclient -v --jobs=1 runhooks #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
+gclient runhooks -v -j1 #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
 ``` 
 
 ## 4、在ubuntu20.04解压合并第三方源代码
