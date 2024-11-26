@@ -23,7 +23,7 @@ export PATH=$PATH:`pwd`/depot_tools
 
 ```bash
 git clone --depth 1 --branch 53.0.2785.134 https://gitee.com/mirrors/chromium.git
-mv chromium chromium53.0.2785.134
+mv chromium src
 ```
 
 ## 3、在ubuntu 16.04获取第三方源代码 
