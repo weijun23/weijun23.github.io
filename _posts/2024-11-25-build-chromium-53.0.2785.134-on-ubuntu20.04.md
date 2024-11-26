@@ -9,7 +9,7 @@ tags: [chromium]
 
 ## 1、获取depot_tools
 
-下载最新depot_tools,，这个压缩包里带.git目录，下载后解压
+下载最新depot_tools,，这个压缩包里带.git目录，下载后解压(注：git回退到当时的版本，防止运行gclient意外？)
 ```bash
 wget https://storage.googleapis.com/chrome-infra/depot_tools.zip
 unzip depot_tools.zip  -d ./depot_tools
@@ -34,7 +34,7 @@ mv chromium chromium53.0.2785.134
 ```python
 solutions = [
   {
-    "name": "chromium53.0.2785.134", # 拉去后存放的目录
+    "name": "src", # 拉去后存放的目录
     "url": "https://gitee.com/mirrors/chromium.git", # 要拉取的仓库地址，solution地址
     "custom_deps": {}, # 这是一个可选的字典对象，会覆盖工程的"DEPS"文件定义的条目
     "deps_file": "",   # deps 文件名（如果找不到，会找DEPS?）
@@ -46,18 +46,18 @@ solutions = [
 使用gclient sync --nohooks命令下载chromium的第三方源代码，比如v8源代码，他是根据DEPS文件下载，这里必须要用到git代理
 
 ```bash
-gclient sync -v --nohooks #拉取代码之后不执行hooks,-v显示详细每一步
+gclient sync --nohooks -v --jobs=1 #拉取代码之后不执行hooks,-v显示详细每一步
 ```
 利用gclient runhooks命令自动下载编译环境的文件，如gn，他会下载到buildtools目录下,描述在DEPS里的hooks节点
 
 ```bash
-gclient -v runhooks #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
+gclient -v --jobs=1 runhooks #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
 ``` 
 
 ## 4、在ubuntu20.04解压合并第三方源代码
 
 ```bash
-tar xf chromium53.0.2785.134_patch.tar.xz -C chromium53.0.2785.134/
+tar xf chromium53.0.2785.134_patch.tar.xz -C src/
 ``` 
 
 ## 5、编译
@@ -75,7 +75,7 @@ is_component_build = false：使用静态链接构建，所有依赖项都包含
 
 一切就绪，开始编译
 ```bash
-cd chromium53.0.2785.134
+cd src
 mkdir out/
 mv ../args.gn out/args.gn
 gn gen out/
