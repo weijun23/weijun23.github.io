@@ -9,14 +9,14 @@ tags: [chromium]
 
 ## 1、获取depot_tools
 
-下载最新depot_tools,，这个压缩包里带.git目录，下载后解压(注：git回退到当时的版本，防止运行gclient意外？)
+下载最新depot_tools,，这个压缩包里带.git目录，下载后解压(注：git回退到和chromium同时期的版本，防止运行gclient意外)
 ```bash
 wget https://storage.googleapis.com/chrome-infra/depot_tools.zip
 unzip depot_tools.zip  -d ./depot_tools
 ```
 最后将depot_tools添加到环境变量PATH中。
 ```bash
-export PATH=$PATH:`pwd`/depot_tools
+export PATH=`pwd`/depot_tools:$PATH
 ```
 
 ## 2、下载chromium代码
@@ -26,41 +26,32 @@ git clone --depth 1 --branch 53.0.2785.134 https://gitee.com/mirrors/chromium.gi
 mv chromium src
 ```
 
-## 3、在ubuntu 16.04获取第三方源代码 
-
-（这一步可以省略，已经保存成chromium53.0.2785.134_patch.tar.xz了，直接在ubuntu 20.04上解压即可，方法还是写一下）
+## 3、获取第三方源代码 
 
 手工创建gclient配置文件.gclient
 ```python
 solutions = [
   {
-    "name": "src", # 拉去后存放的目录
+    "name": "src", # 拉去后存放的目录,这是chromium的存放目录，其他三方代码还是放到src
     "url": "https://gitee.com/mirrors/chromium.git", # 要拉取的仓库地址，solution地址
     "custom_deps": {}, # 这是一个可选的字典对象，会覆盖工程的"DEPS"文件定义的条目
     "deps_file": "",   # deps 文件名（如果找不到，会找DEPS?）
-    "managed": False,  # 使用 unmanaged 模式,unmanaged solution; skipping src,不拉取chromium代码
+    "managed": False,  # 使用 unmanaged 模式,unmanaged solution; skipping src,不拉取chromium代码，已经下载了
     "safesync_url": "",
   },
 ]
 ```
-使用gclient sync --nohooks命令下载chromium的第三方源代码，比如v8源代码，他是根据DEPS文件下载，这里必须要用到git代理
-
+使用gclient sync --nohooks命令下载chromium的第三方源代码，比如v8源代码，他是根据DEPS文件下载，这里必须要用到git代理  
+拉取代码之后不执行hooks,-v显示详细每一步  
 ```bash
-gclient sync --nohooks -v -j1 #拉取代码之后不执行hooks,-v显示详细每一步
+gclient sync --nohooks --no-history -v -j1
 ```
-利用gclient runhooks命令自动下载编译环境的文件，如gn，他会下载到buildtools目录下,描述在DEPS里的hooks节点
-
+利用gclient runhooks命令自动下载编译环境的文件，如libcxx，描述在DEPS里的hooks节点  
+可以使用下面命令来手动执行hooks，这里用到vpython，老版本depot_tools才有，这是用老depot_tools的原因了
 ```bash
-gclient runhooks -v -j1 #拉取代码时使用了--nohooks参数时，可以使用该命令来手动执行hooks
+gclient runhooks -v -j1 
 ``` 
-
-## 4、在ubuntu20.04解压合并第三方源代码
-
-```bash
-tar xf chromium53.0.2785.134_patch.tar.xz -C src/
-``` 
-
-## 5、编译
+## 4、编译
 
 新建编译参数文件args.gn，如果需要更多详细的配置参数，查看官网http://www.chromium.org/developers/gn-build-configuration
 ```python
@@ -83,7 +74,7 @@ ninja -C out/
 ```
 附加命令：gn args --list out/，可以看配置
 
-## 6、运行
+## 5、运行
 
 ```bash
 cd src/out/; LD_LIBRARY_PATH=/home/wuwj/chromium/lib/ ./content_shell
