@@ -38,7 +38,7 @@ solutions = [
     "url": "https://gitee.com/mirrors/chromium.git", # 要拉取的仓库地址，solution地址
     "custom_deps": {}, # 这是一个可选的字典对象，会覆盖工程的"DEPS"文件定义的条目
     "deps_file": "",   # deps 文件名（如果找不到，会找DEPS?）
-    "managed": False,  # 使用 unmanaged 模式
+    "managed": False,  # 使用 unmanaged 模式,unmanaged solution; skipping src,不拉取chromium代码
     "safesync_url": "",
   },
 ]
