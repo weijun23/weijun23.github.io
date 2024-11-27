@@ -26,7 +26,7 @@ git clone --depth 1 --branch 53.0.2785.134 https://gitee.com/mirrors/chromium.gi
 mv chromium src
 ```
 
-## 3、获取第三方源代码 
+## 3、获取第三方源代码 (这步只能在Ubuntu16.04上运行)
 
 手工创建gclient配置文件.gclient
 ```python
@@ -70,7 +70,7 @@ cd src
 mkdir out/
 mv ../args.gn out/args.gn
 gn gen out/
-ninja -C out/
+ninja -C out/ content_shell
 ```
 附加命令：gn args --list out/，可以看配置
 
@@ -94,15 +94,5 @@ lrwxrwxrwx 1 wuwj wuwj      18 11月 21 16:03 libpng12.so.0 -> libpng12.so.0.49.
 -rw-r----- 1 wuwj wuwj  158640 11月 21 16:03 libpng12.so.0.49.0
 ```
 
-1、附加快照下载地址，这是google自己编译好的[content_shell](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/424785/)
+附加快照下载地址，这是google自己编译好的[content_shell](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/424785/)
 
-2、附加一个没git版本号导致的错误，没.git目录才这样
-```python
-FAILED: gen/tools/gn/last_commit_position.h
-python ../tools/gn/last_commit_position.py ../ gen/tools/gn/last_commit_position.h TOOLS_GN_LAST_COMMIT_POSITION_H_
-Could not get last commit position.
-修改tools/gn/last_commit_position.py的第99行
- 98   print "Could not get last commit position."
- 99   #sys.exit(1)
-100   value = "5f693d26f1a3fdb07c32e8eb16bae5aa1a43cc58"
-```
