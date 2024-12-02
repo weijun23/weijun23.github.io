@@ -72,7 +72,12 @@ mv ../args.gn out/args.gn
 gn gen out/
 ninja -C out/ content_shell
 ```
-附加命令：gn args --list out/，可以看配置
+附加命令：gn args --list out/，可以看配置  
+gn ls out/,                            列出所有的target；  
+gn ls out/ "//:hello_word*" ,          列出匹配的target；  
+gn desc out/ "//:hello_word" ,         查看指定target的描述信息，包括src源码文件、依赖的lib、编译选项等；  
+gn refs out/ 文件,                      查看依赖该文件的target；  
+gn refs out/ //:hello_word,            查看依赖该target的target  
 
 ## 5、运行
 
