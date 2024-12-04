@@ -21,6 +21,27 @@ tags: [chromium]
 ```
 
 ```mermaid
+classDiagram
+ContentMainDelegate <|.. ShellMainDelegate
+ShellMainDelegate --o ContentMainParams
+
+ContentMainRunner <|.. ContentMainRunnerImpl
+ContentMainRunnerImpl ..> ContentMainParams
+ContentMainRunnerImpl --> ShellMainDelegate
+ShellMainDelegate ..> BrowserMainRunnerImpl
+ShellMainDelegate ..> MainFunctionParams
+
+BrowserMainRunner <|.. BrowserMainRunnerImpl
+BrowserMainRunnerImpl ..> MainFunctionParams
+BrowserMainRunnerImpl --> BrowserMainLoop
+BrowserMainLoop o-- MainFunctionParams
+ShellBrowserMainParts <-- BrowserMainLoop
+
+BrowserMainParts <|.. ShellBrowserMainParts
+MainFunctionParams --o ShellBrowserMainParts
+```
+
+```mermaid
 sequenceDiagram
 shell_main->>shell_main: params(&delegate)
 shell_main->>+content_main: ContentMain(params)
