@@ -353,13 +353,14 @@ main_runner->Shutdown();
     const std::string& process_type, const MainFunctionParams& main_function_params, ContentMainDelegate* delegate)
     
     (gdb) p kMainFunctions
-      {{name = 0x9542c47 "",function = 0x44af1a0 <content::BrowserMain(content::MainFunctionParams const&)>}, 
-       {name = 0xa53c096 <switches::kPpapiPluginProcess> "ppapi",function = 0x42e8290 <content::PpapiPluginMain(content::MainFunctionParams const&)>}, 
-       {name = 0xa53c02a <switches::kPpapiBrokerProcess> "ppapi-broker",function = 0x42e7f10 <content::PpapiBrokerMain(content::MainFunctionParams const&)>}, 
-       {name = 0xa53c453 <switches::kUtilityProcess> "utility",function = 0x42dbb70 <content::UtilityMain(content::MainFunctionParams const&)>}, 
-       {name = 0xa53c174 <switches::kRendererProcess> "renderer",function = 0x3905330 <content::RendererMain(content::MainFunctionParams const&)>}, 
-       {name = 0xa53bc6d <switches::kGpuProcess> "gpu-process",function = 0x1bb72f0 <content::GpuMain(content::MainFunctionParams const&)>
+      {{name = 0x9542c47 "",function = 0x44af1a0 <content::BrowserMain(content::MainFunctionParams const\&\)\>\}, 
+       {name = 0xa53c096 <switches::kPpapiPluginProcess> "ppapi",function = 0x42e8290 <content::PpapiPluginMain(content::MainFunctionParams const\&\)\>\}, 
+       {name = 0xa53c02a <switches::kPpapiBrokerProcess> "ppapi-broker",function = 0x42e7f10 <content::PpapiBrokerMain(content::MainFunctionParams const\&\)\>\}, 
+       {name = 0xa53c453 <switches::kUtilityProcess> "utility",function = 0x42dbb70 <content::UtilityMain(content::MainFunctionParams const\&\)\>\}, 
+       {name = 0xa53c174 <switches::kRendererProcess> "renderer",function = 0x3905330 <content::RendererMain(content::MainFunctionParams const\&\)\>\}, 
+       {name = 0xa53bc6d <switches::kGpuProcess> "gpu-process",function = 0x1bb72f0 <content::GpuMain(content::MainFunctionParams const\&\)\>
     }}
+    
    
   //UtilityProcessHostImpl::RegisterUtilityMainThreadFactory(CreateInProcessUtilityThread); //设置全局变量g_utility_main_thread_factory的值=CreateInProcessUtilityThread
   //RenderProcessHostImpl::RegisterRendererMainThreadFactory(CreateInProcessRendererThread); //设置全局变量g_renderer_main_thread_factory的值=CreateInProcessRendererThread
