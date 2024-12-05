@@ -3,6 +3,7 @@ title: Chromium53启动流程解读
 date: 2024-12-03 10:56:51 +0800
 categories: [Blogging]
 tags: [chromium]
+mermaid: true
 ---
 
 ```shell
