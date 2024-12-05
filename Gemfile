@@ -13,4 +13,4 @@ end
 
 gem "wdm", "~> 0.2.0", :platforms => [:mingw, :x64_mingw, :mswin]
 
-gem 'jekyll-spaceship', '~> 0.10.2'
+gem 'jekyll-spaceship', group: :jekyll_plugins
