@@ -1,6 +1,6 @@
 ---
 title: UML类图
-date: 2025-04-12 00:56:51 +0800
+date: 2025-04-11 00:56:51 +0800
 categories: [Blogging]
 tags: [chromium]
 mermaid: true
