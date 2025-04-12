@@ -15,7 +15,8 @@ UML类图中包含**‌六种核心关系**‌，具体定义及表现形式如�
 * ‌示例‌：Dog继承Animal，表示为Dog → Animal‌。
 * ‌关系‌：B 继承自 A（B 是 A 的子类）
 * ‌UML符号‌：空心箭头实线（箭头指向父类） A <|-- B
-```C
+
+```c++
 class A {
   public:
     void func() { /* ... */ }
@@ -37,7 +38,8 @@ A <|-- B
 * ‌示例‌：Car类实现Vehicle接口，表示为Car ⤍ Vehicle‌。
 * ‌关系‌：B 实现接口 A
 * ‌UML符号‌：空心箭头虚线（箭头指向接口）A <|.. B
-```C
+
+```c++
 class A {  // 接口（纯虚类）
   public:
     virtual void pureVirtualFunc() = 0;
@@ -59,7 +61,8 @@ A <|.. B
 * ‌示例‌：Teacher与Student双向关联，表示教师持有学生列表，学生也持有教师列表‌。
 * ‌‌关系‌：A 和 B 长期持有对方的对象（双向关联）
 * ‌‌UML符号‌：实线 A -- B
-```C
+
+```c++
 class B;  // 前向声明
 class A {
   private:
@@ -87,7 +90,7 @@ A -- B
 * ‌关系‌：A 包含 B，但 B 可独立存在
 * ‌UML符号‌：空心菱形实线（菱形指向整体 A） A o-- B
 
-```C
+```c++
 class B;  // 前向声明
 class A {
   private:
@@ -111,7 +114,7 @@ A o-- B
 * 关系‌：A 包含 B，B 依赖 A 的生命周期
 * ‌UML符号‌：实心菱形实线（菱形指向整体 A）A *-- B
 
-```C
+```c++
 class B;  // 前向声明
 class A {
   private:
@@ -135,7 +138,7 @@ A *-- B
 * 关系‌：A 临时使用 B
 * UML符号‌：虚线箭头（箭头指向被依赖的 B）A ..> B
 
-```C
+```c++
 class B;  // 前向声明
 class A {
   public:
