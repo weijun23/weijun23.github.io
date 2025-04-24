@@ -211,11 +211,11 @@ author: weijun23
            type = HTTP
    [receive]
            enableSignedPush = true
-   [sendemail]
-           smtpServer = smtp.exmail.qq.com
-           smtpServerPort = 465
-           smtpEncryption = SSL
-           smtpUser = wuwj@nationalchip.com
+   [sendemail] #发送到本机/var/mail/gerrit文件里，不外发
+           smtpServer = localhost
+           smtpPort = 25
+           from = gerrit@localhost.localdomain
+           sendEmail = true
    [container]
            user = gerrit
            javaHome = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-1.el7_9.x86_64/jre
@@ -304,7 +304,34 @@ author: weijun23
 ```
 这样就可以repo使用了
 
-其他：
+### 4、 其他：
 
+重启gerrit方式
+```shell
  ~/review/bin/gerrit.sh stop;java -jar gerrit-2.14.22.war reindex -d review;sudo ~/review/bin/gerrit.sh restart
+```
+ 安装postfix，没保存注册邮箱，提交不了代码
+```shell
+sudo yum install postfix
+sudo vi /etc/postfix/main.cf
+    myhostname = localhost.localdomain                                # 主机名用本机
+    mydestination = localhost, localhost.localdomain, 192.168.190.229 # 允许的邮件来源
+sudo systemctl start postfix
+sudo systemctl enable postfix
 
+[gerrit@localhost ~]$ sudo tail -f /var/log/maillog #查看发送邮件日志
+[gerrit@localhost ~]$ postqueue -p                  #查看发送队列
+[gerrit@localhost ~]$ sudo postcat -q ECB8A4270D50  #查看邮件，要带上邮件ID
+[gerrit@localhost ~]$ sudo postsuper -d ALL         #清空发送队列
+```
+查看邮件
+```shell
+cat /var/mail/gerrit
+sudo echo "" > cat /var/mail/gerrit #清空
+```
+### 5、 QA：怎么添加用户？
+```shell
+sudo htpasswd -b /etc/httpd/passwords  wuwj wuwj
+cat /var/mail/gerrit                #注册邮箱
+sudo echo "" > cat /var/mail/gerrit #清空
+```
