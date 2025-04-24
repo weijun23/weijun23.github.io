@@ -327,11 +327,11 @@ sudo systemctl enable postfix
 查看邮件
 ```shell
 cat /var/mail/gerrit
-sudo echo "" > cat /var/mail/gerrit #清空
+sudo echo /dev/null > cat /var/mail/gerrit #清空
 ```
 ### 5、 QA：怎么添加用户？
 ```shell
 sudo htpasswd -b /etc/httpd/passwords  wuwj wuwj
 cat /var/mail/gerrit                #注册邮箱
-sudo echo "" > cat /var/mail/gerrit #清空
+sudo echo /dev/null > cat /var/mail/gerrit #清空
 ```
