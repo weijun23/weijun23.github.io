@@ -5,7 +5,6 @@ categories: [Blogging]
 tags: [git]
 mermaid: true
 ---
-
 **步骤 1：查看设备信息**
 
 插入USB设备后，使用以下命令查看设备的基本信息：
@@ -21,7 +20,6 @@ Bus 002 Device 004: ID 1234:5678 My USB Device
 ```
 
 记录设备的厂商ID（VID）和产品ID（PID），例如：1234 和 5678。
-
 
 **步骤 2：获取设备的详细信息**
 
@@ -77,9 +75,7 @@ SUBSYSTEM=="tty", ATTRS{idVendor}=="abcd", ATTRS{idProduct}=="efgh", ATTRS{seria
 替换idVendor、idProduct和serial为实际设备信息。
 SYMLINK表示创建的符号链接名称（如ttyUSB_device_1）。
 
-
 **步骤 4：重新加载udev规则**
-
 
 保存规则文件后，重新加载udev规则：
 
@@ -109,8 +105,9 @@ lrwxrwxrwx 1 root root 7 Dec  6 12:34 /dev/ttyUSB_device_2 -> ttyUSB1
 ```
 
 确保每次插入设备后，能通过符号链接访问设备（如/dev/ttyUSB_device_1）。
-注意事项
-文件命名： udev规则文件的命名（如99-usb-serial.rules）与SYMLINK名称无关，但建议使用清晰的文件名便于管理。
-属性匹配： idVendor和idProduct是必需的，serial属性可选（如设备有唯一序列号，建议添加）。
-符号链接： SYMLINK提供固定的设备路径，便于开发和调试。
-通过以上步骤，可以确保每次插入USB设备时，设备绑定到固定的串口号，提升开发效率和使用便利性。
+
+* 注意事项
+* 文件命名： udev规则文件的命名（如99-usb-serial.rules）与SYMLINK名称无关，但建议使用清晰的文件名便于管理。
+* 属性匹配： idVendor和idProduct是必需的，serial属性可选（如设备有唯一序列号，建议添加）。
+* 符号链接： SYMLINK提供固定的设备路径，便于开发和调试。
+* 通过以上步骤，可以确保每次插入USB设备时，设备绑定到固定的串口号，提升开发效率和使用便利性。
